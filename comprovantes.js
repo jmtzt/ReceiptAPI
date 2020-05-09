@@ -65,7 +65,7 @@ function daemsF(file) {
   // for (let index = 0; index < numberOfCompr; index++) {
   //   let tipo = $('#conteudo > div > div:nth-child(1) > div.box_grayLine_bottom.pb0.comprovante > table > tbody > tr > td > ul > li.item.pb20 > img').get(index);
 
-  //   console.log(typeof tipo === "object" ? true : false);
+  //   //console.log(typeof tipo === "object" ? true : false);
   // }
 
   // let countObject = 0;
@@ -119,7 +119,7 @@ function daemsF(file) {
       daems.push(daem);
     } else if (typeof tipo === "undefined") {
 
-      // console.log(index);
+      // //console.log(index);
       let controle = $("#boxPrint01 > div.ptb10.comprovante.pb10.pl10 > table > tbody > tr > td:nth-child(2) > ul > li").get(countUndef).children[0].next.next.next.data.split(' ')[3];
       let agConta = $("#boxPrint01 > div.ptb10.comprovante.pb10.pl10 > table > tbody > tr > td:nth-child(2) > ul > li").get(countUndef).children[0].next.next.next.next.next.data;
       let codBarras = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(5)').get(countUndef).children[0].data;
@@ -160,9 +160,9 @@ function tedF(file) {
   const infosAfter = $("ul.list_infos.after");
   const numberOfCompr = infosAfter.find("p.lh15").length;
 
-  console.log(numberOfCompr);
+  //console.log(numberOfCompr);
 
-  // console.log(infosAfter.find('li.item:contains("Data de débito:")').get(index).next.children[0].data);
+  // //console.log(infosAfter.find('li.item:contains("Data de débito:")').get(index).next.children[0].data);
 
   for (let index = 0; index < numberOfCompr; index++) {
     let controle = $("li[class*=info]")
@@ -225,7 +225,7 @@ function tcbF(file) {
   const infosAfter = $("ul.list_infos.after");
   const numberOfCompr = infosAfter.find("li.pb15").length;
 
-  console.log(numberOfCompr);
+  //console.log(numberOfCompr);
   for (let index = 0; index < numberOfCompr; index++) {
     let controle = $("li[class*=info]")
       .find("p.lh15")
@@ -290,7 +290,7 @@ function telF(file) {
   const infosAfter = $("ul.list_infos.after");
   const numberOfCompr = infosAfter.find("li.pb15").length;
 
-  console.log(numberOfCompr);
+  //console.log(numberOfCompr);
 
   for (let index = 0; index < numberOfCompr; index++) {
     let controle = $("li[class*=info]")
@@ -356,9 +356,9 @@ function daesF(file) {
 
   const infosAfter = $("ul.list_infos.after");
   const numberOfCompr = $('h2.pb15:contains("Autenticação")').length;
-  console.log(numberOfCompr);
+  //console.log(numberOfCompr);
 
-  // console.log($("ul.cabecalho > li[class*=info]").find('br'));
+  // //console.log($("ul.cabecalho > li[class*=info]").find('br'));
 
   for (let index = 0; index < numberOfCompr; index++) {
     let tipo = infosAfter.find("li.info.pb15 h2").get(index);
@@ -450,7 +450,7 @@ function darfF(file) {
 
   const infosAfter = $("ul.list_infos");
   const numberOfCompr = $("img#foco_mensagem").length;
-  console.log(numberOfCompr);
+  //console.log(numberOfCompr);
 
   for (let index = 0; index < numberOfCompr; index++) {
     let controle = $(
@@ -539,7 +539,7 @@ function gpsF(file) {
 
   const infosAfter = $("ul.list_infos.after");
   const numberOfCompr = $("img.logoComprovante").length;
-  console.log(numberOfCompr);
+  //console.log(numberOfCompr);
 
   for (let index = 0; index < numberOfCompr; index++) {
     let contaDebito =
@@ -758,7 +758,7 @@ function bbpjF(file) {
     bb_arr_temp.push(compr2);
   });
 
-  //console.log(bb_arr_temp[15]);
+  ////console.log(bb_arr_temp[15]);
 
   return bb_arr_temp;
 }
@@ -773,7 +773,7 @@ function chequeBradescoF(file) {
   function formatDate(date) {
     var data = new Date(date);
     var extenso;
-    // console.log(data);
+    // //console.log(data);
     var day = data.getDate();
     var month = [
       "Janeiro",
