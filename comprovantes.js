@@ -50,7 +50,7 @@ function titulosF(file) {
     };
     titulos.push(titulo);
   }
-  return titulos;
+  return { ...titulos };
 }
 
 function daemsF(file) {
@@ -60,7 +60,12 @@ function daemsF(file) {
   const infosAfter = $("ul.list_infos.after");
   // const numberOfCompr = infosAfter.find("p.lh15").length;
 
-  const numberOfCompr = $('#conteudo > div > div.conteudo_linha.pt20.after.mt0.bb0.mt0.alignCenter.after.alignCenter > h2').length + $('#boxPrint01 > div.box_grayLine_bottom > div:nth-child(1) > h3 > b').length;
+  const numberOfCompr =
+    $(
+      "#conteudo > div > div.conteudo_linha.pt20.after.mt0.bb0.mt0.alignCenter.after.alignCenter > h2"
+    ).length +
+    $("#boxPrint01 > div.box_grayLine_bottom > div:nth-child(1) > h3 > b")
+      .length;
 
   // for (let index = 0; index < numberOfCompr; index++) {
   //   let tipo = $('#conteudo > div > div:nth-child(1) > div.box_grayLine_bottom.pb0.comprovante > table > tbody > tr > td > ul > li.item.pb20 > img').get(index);
@@ -72,7 +77,9 @@ function daemsF(file) {
   let countUndef = 0;
 
   for (let index = 0; index < numberOfCompr; index++) {
-    let tipo = $('#conteudo > div > div:nth-child(1) > div.box_grayLine_bottom.pb0.comprovante > table > tbody > tr > td > ul > li.item.pb20 > img').get(index);
+    let tipo = $(
+      "#conteudo > div > div:nth-child(1) > div.box_grayLine_bottom.pb0.comprovante > table > tbody > tr > td > ul > li.item.pb20 > img"
+    ).get(index);
 
     if (typeof tipo === "object") {
       // countObject++;
@@ -95,14 +102,17 @@ function daemsF(file) {
       let empresa = infosAfter
         .find('li.item:contains("Empresa / Órgão:")')
         .get(index).next.children[0].data;
-      let desc = infosAfter.find('li.item:contains("Descrição:")').get(index).next
-        .children[0].data;
-      let ref = $('#conteudo > div > div:nth-child(1) > div:nth-child(2) > table > tbody > tr > td > ul > li:nth-child(11)').get(index).children[0].data;
+      let desc = infosAfter.find('li.item:contains("Descrição:")').get(index)
+        .next.children[0].data;
+      let ref = $(
+        "#conteudo > div > div:nth-child(1) > div:nth-child(2) > table > tbody > tr > td > ul > li:nth-child(11)"
+      ).get(index).children[0].data;
       let valor = infosAfter
         .find('li.item:contains("Valor do pagamento:")')
         .get(index).next.children[0].data;
-      let data = infosAfter.find('li.item:contains("Data de débito:")').get(index)
-        .next.children[0].data;
+      let data = infosAfter
+        .find('li.item:contains("Data de débito:")')
+        .get(index).next.children[0].data;
 
       let daem = {
         controle: controle,
@@ -118,18 +128,39 @@ function daemsF(file) {
       };
       daems.push(daem);
     } else if (typeof tipo === "undefined") {
-
       // //console.log(index);
-      let controle = $("#boxPrint01 > div.ptb10.comprovante.pb10.pl10 > table > tbody > tr > td:nth-child(2) > ul > li").get(countUndef).children[0].next.next.next.data.split(' ')[3];
-      let agConta = $("#boxPrint01 > div.ptb10.comprovante.pb10.pl10 > table > tbody > tr > td:nth-child(2) > ul > li").get(countUndef).children[0].next.next.next.next.next.data;
-      let codBarras = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(5)').get(countUndef).children[0].data;
-      let dataPag = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(8)').get(countUndef).children[0].data;
-      let periodoAp = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(11)').get(countUndef).children[0].data;
-      let cpf = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(14)').get(countUndef).children[0].data;
-      let codReceita = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(17)').get(countUndef).children[0].data;
-      let dataVenc = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(20)').get(countUndef).children[0].data;
-      let valor = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(23)').get(countUndef).children[0].data;
-      let aut = $('#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(26)').get(countUndef).children[0].data;
+      let controle = $(
+        "#boxPrint01 > div.ptb10.comprovante.pb10.pl10 > table > tbody > tr > td:nth-child(2) > ul > li"
+      )
+        .get(countUndef)
+        .children[0].next.next.next.data.split(" ")[3];
+      let agConta = $(
+        "#boxPrint01 > div.ptb10.comprovante.pb10.pl10 > table > tbody > tr > td:nth-child(2) > ul > li"
+      ).get(countUndef).children[0].next.next.next.next.next.data;
+      let codBarras = $(
+        "#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(5)"
+      ).get(countUndef).children[0].data;
+      let dataPag = $(
+        "#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(8)"
+      ).get(countUndef).children[0].data;
+      let periodoAp = $(
+        "#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(11)"
+      ).get(countUndef).children[0].data;
+      let cpf = $(
+        "#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(14)"
+      ).get(countUndef).children[0].data;
+      let codReceita = $(
+        "#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(17)"
+      ).get(countUndef).children[0].data;
+      let dataVenc = $(
+        "#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(20)"
+      ).get(countUndef).children[0].data;
+      let valor = $(
+        "#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(23)"
+      ).get(countUndef).children[0].data;
+      let aut = $(
+        "#boxPrint01 > div.box_grayLine_bottom > table > tbody > tr > td > ul > li:nth-child(26)"
+      ).get(countUndef).children[0].data;
 
       let daem = {
         controle: controle,
@@ -141,15 +172,14 @@ function daemsF(file) {
         codReceita: codReceita,
         dataVenc: dataVenc,
         valor: valor,
-        aut: aut
-      }
+        aut: aut,
+      };
       daems.push(daem);
       countUndef++;
     }
   }
 
-
-  return daems;
+  return { ...daems };
 }
 
 function tedF(file) {
@@ -214,7 +244,7 @@ function tedF(file) {
     teds.push(ted);
   }
 
-  return teds;
+  return { ...teds };
 }
 
 function tcbF(file) {
@@ -279,7 +309,7 @@ function tcbF(file) {
     };
     tcbs.push(tcb);
   }
-  return tcbs;
+  return { ...tcbs };
 }
 
 function telF(file) {
@@ -346,7 +376,7 @@ function telF(file) {
     };
     tels.push(tel);
   }
-  return tels;
+  return { ...tels };
 }
 
 function daesF(file) {
@@ -440,7 +470,7 @@ function daesF(file) {
       daes.push(dae);
     }
   }
-  return daes;
+  return { ...daes };
 }
 
 function darfF(file) {
@@ -529,7 +559,7 @@ function darfF(file) {
     };
     darfs.push(darf);
   }
-  return darfs;
+  return { ...darfs };
 }
 
 function gpsF(file) {
@@ -645,7 +675,7 @@ function gpsF(file) {
     };
     gps_arr.push(gps);
   }
-  return gps_arr;
+  return { ...gps_arr };
 }
 
 function bbpjF(file) {
@@ -760,7 +790,7 @@ function bbpjF(file) {
 
   ////console.log(bb_arr_temp[15]);
 
-  return bb_arr_temp;
+  return { ...bb_arr_temp };
 }
 
 function chequeBradescoF(file) {
@@ -811,7 +841,7 @@ function chequeBradescoF(file) {
     mes: formatDate(obj.data)[1],
     ano: formatDate(obj.data)[2],
   }));
-  return newData;
+  return { ...newData };
 }
 
 module.exports = {
