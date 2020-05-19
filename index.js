@@ -2,6 +2,7 @@ const express = require("express");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const comprovantes = require("./comprovantes");
+const mongoose = require("mongoose");
 
 const app = express();
 

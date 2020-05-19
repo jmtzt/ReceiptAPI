@@ -252,10 +252,16 @@ function tcbF(file) {
 
   const $ = cheerio.load(file);
 
+  //console.log(
+  //$(
+  //"#conteudo > div > div:nth-child(1) > div:nth-child(2) > table > tbody > tr > td > ul > li.info.last"
+  //).get(0).children[0].data
+  //);
+
   const infosAfter = $("ul.list_infos.after");
   const numberOfCompr = infosAfter.find("li.pb15").length;
 
-  //console.log(numberOfCompr);
+  console.log(numberOfCompr);
   for (let index = 0; index < numberOfCompr; index++) {
     let controle = $("li[class*=info]")
       .find("p.lh15")
@@ -285,11 +291,14 @@ function tcbF(file) {
     let desc;
 
     if (
-      infosAfter.find("li.item.last").get(index).children[0].data ===
-      "Descrição:"
+      //infosAfter.find("li.item.last").get(index).children[0].data ===
+      $(
+        "#conteudo > div > div:nth-child(1) > div:nth-child(2) > table > tbody > tr > td > ul > li.item.last"
+      ).get(index).children[0].data === "Descrição:"
     ) {
-      desc = infosAfter.find('li.item:contains("Descrição:")').get(index).next
-        .children[0].data;
+      desc = $(
+        "#conteudo > div > div:nth-child(1) > div:nth-child(2) > table > tbody > tr > td > ul > li.info.last"
+      ).get(index).children[0].data;
     } else if (
       infosAfter.find("li.item.last").get(index).children[0].data ===
       "Data de débito:"
