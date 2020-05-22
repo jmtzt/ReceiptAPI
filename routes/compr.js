@@ -1,11 +1,14 @@
 var express = require("express");
 var router = express.Router();
 var mongoose = require("mongoose");
+const authMiddleware = require("../middlewares/auth");
 
 const comprovantes = require("../lib/comprovantes");
 const connection = require("../lib/init-mongoose.js");
 
-router.route("/:comprType").post((req, res) => {
+router.use(authMiddleware);
+
+router.post("/:comprType", (req, res) => {
   if (!req.files) {
     return res.status(500).send({ msg: "file not found" });
   }
@@ -53,4 +56,4 @@ router.route("/:comprType").post((req, res) => {
   res.send(compr);
   compr = [];
 });
-module.exports = router;
+module.exports = (app) => app.use("/comprovantes", router);

@@ -1,6 +1,9 @@
 var express = require("express");
 var router = express.Router();
 var mongoose = require("mongoose");
+const authMiddleware = require("../middlewares/auth");
+
+router.use(authMiddleware);
 
 const connection = require("../lib/init-mongoose.js");
 
@@ -45,19 +48,62 @@ const benSchema = {
 
 const Beneficiario = mongoose.model("beneficiario", benSchema);
 
-router
-  .route("/")
-  .get(function (req, res) {
-    Beneficiario.find(function (err, foundBeneficiario) {
-      if (!err) {
-        res.send(foundBeneficiario);
-      } else {
-        res.send(err);
-      }
-    });
-  })
-  .post(function (req, res) {
-    const beneficiario = new Beneficiario({
+router.get("/", function (req, res) {
+  Beneficiario.find(function (err, foundBeneficiario) {
+    if (!err) {
+      res.send(foundBeneficiario);
+    } else {
+      res.send(err);
+    }
+  });
+});
+router.post("/", function (req, res) {
+  const beneficiario = new Beneficiario({
+    Nome: req.body.nome,
+    CPF: req.body.cpf,
+    RG: req.body.rg,
+    Endereço: req.body.endereco,
+    Bairro: req.body.bairro,
+    UF: req.body.uf,
+    Fone: req.body.fone,
+    INSS: req.body.inss,
+  });
+
+  beneficiario.save(function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send("Beneficiario added sucessfully!");
+    }
+  });
+});
+router.delete("/", function (req, res) {
+  Beneficiario.deleteMany(function (err) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send("Deleted all beneficiarios sucessfully");
+    }
+  });
+});
+
+router.get("/:beneficiarioName", function (req, res) {
+  Beneficiario.findOne({ Nome: req.params.beneficiarioName }, function (
+    err,
+    foundBeneficiario
+  ) {
+    if (foundBeneficiario) {
+      res.send(foundBeneficiario);
+    } else {
+      res.send("No beneficiarios matching that title was found.");
+    }
+  });
+});
+router.put("/:beneficiarioName", function (req, res) {
+  Beneficiario.updateOne(
+    { Nome: req.params.beneficiarioName },
+    {
+      Codigo: req.body.codigo,
       Nome: req.body.nome,
       CPF: req.body.cpf,
       RG: req.body.rg,
@@ -66,88 +112,39 @@ router
       UF: req.body.uf,
       Fone: req.body.fone,
       INSS: req.body.inss,
-    });
-
-    beneficiario.save(function (err) {
+    },
+    { overwrite: true },
+    function (err) {
       if (err) {
-        console.log(err);
+        res.send("Error updating beneficiario.");
       } else {
-        res.send("Beneficiario added sucessfully!");
+        res.send("Sucessfully updated beneficiario.");
       }
-    });
-  })
-  .delete(function (req, res) {
-    Beneficiario.deleteMany(function (err) {
+    }
+  );
+});
+router.patch(":beneficiarioName", function (req, res) {
+  Beneficiario.updateOne(
+    { Nome: req.params.beneficiarioName },
+    { $set: req.body },
+    { overwrite: false },
+    function (err) {
       if (err) {
-        res.send(err);
+        res.send("Error patching beneficiario.");
       } else {
-        res.send("Deleted all beneficiarios sucessfully");
+        res.send("Sucessfully patched beneficiario.");
       }
-    });
+    }
+  );
+});
+router.delete(":beneficiarioName", function (req, res) {
+  Beneficiario.deleteOne({ Nome: req.params.beneficiarioName }, function (err) {
+    if (err) {
+      res.send("Error deleting beneficiario.");
+    } else {
+      res.send("Sucessfully deleted beneficiario.");
+    }
   });
+});
 
-router
-  .route("/:beneficiarioName")
-  .get(function (req, res) {
-    Beneficiario.findOne({ Nome: req.params.beneficiarioName }, function (
-      err,
-      foundBeneficiario
-    ) {
-      if (foundBeneficiario) {
-        res.send(foundBeneficiario);
-      } else {
-        res.send("No beneficiarios matching that title was found.");
-      }
-    });
-  })
-  .put(function (req, res) {
-    Beneficiario.updateOne(
-      { Nome: req.params.beneficiarioName },
-      {
-        Codigo: req.body.codigo,
-        Nome: req.body.nome,
-        CPF: req.body.cpf,
-        RG: req.body.rg,
-        Endereço: req.body.endereco,
-        Bairro: req.body.bairro,
-        UF: req.body.uf,
-        Fone: req.body.fone,
-        INSS: req.body.inss,
-      },
-      { overwrite: true },
-      function (err) {
-        if (err) {
-          res.send("Error updating beneficiario.");
-        } else {
-          res.send("Sucessfully updated beneficiario.");
-        }
-      }
-    );
-  })
-  .patch(function (req, res) {
-    Beneficiario.updateOne(
-      { Nome: req.params.beneficiarioName },
-      { $set: req.body },
-      { overwrite: false },
-      function (err) {
-        if (err) {
-          res.send("Error patching beneficiario.");
-        } else {
-          res.send("Sucessfully patched beneficiario.");
-        }
-      }
-    );
-  })
-  .delete(function (req, res) {
-    Beneficiario.deleteOne({ Nome: req.params.beneficiarioName }, function (
-      err
-    ) {
-      if (err) {
-        res.send("Error deleting beneficiario.");
-      } else {
-        res.send("Sucessfully deleted beneficiario.");
-      }
-    });
-  });
-
-module.exports = router;
+module.exports = (app) => app.use("/beneficiarios", router);
